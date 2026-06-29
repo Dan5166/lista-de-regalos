@@ -7,11 +7,13 @@ import { ulid } from "ulid";
 
 // --- Helpers ---
 
-function esAdminDeLista(session: NonNullable<Awaited<ReturnType<typeof auth>>>, listaSlug: string) {
-  const rol = (session.user as any)?.rol;
+type SessionLike = { user?: unknown } | null | undefined;
+
+function esAdminDeLista(session: SessionLike, listaSlug: string) {
+  const rol = (session?.user as any)?.rol;
   return (
     rol === "SUPERADMIN" ||
-    (rol === "ADMIN" && (session.user as any)?.listaSlug === listaSlug)
+    (rol === "ADMIN" && (session?.user as any)?.listaSlug === listaSlug)
   );
 }
 
